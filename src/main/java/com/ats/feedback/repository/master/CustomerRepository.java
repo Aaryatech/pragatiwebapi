@@ -15,7 +15,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
 	@Transactional
 	@Modifying
-	@Query("UPDATE Customer SET delStatus=0    WHERE cust_id=:custId ")
+	@Query("UPDATE Customer SET delStatus=1    WHERE cust_id=:custId ")
 	int deleteCustomer(@Param("custId") int custId);
 
 	List<Customer> findAllByDelStatus(int i);

@@ -14,7 +14,7 @@ public interface ServiceAdviserRepository extends JpaRepository<ServiceAdviser, 
 
 	@Transactional
 	@Modifying
-	@Query("UPDATE ServiceAdviser SET delStatus=0    WHERE sa_id=:saId ")
+	@Query("UPDATE ServiceAdviser SET delStatus=1    WHERE sa_id=:saId ")
 	int deleteServiceAdviser(@Param("saId") int saId);
 
 	ServiceAdviser findServiceAdviserBySaIdAndDelStatus(int saId, int i);

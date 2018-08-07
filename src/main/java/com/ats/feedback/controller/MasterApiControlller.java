@@ -67,7 +67,7 @@ public class MasterApiControlller {
 
 		User user = null;
 		try {
-			user = userRepository.findUserByUserIdAndDelStatus(userId, 1);
+			user = userRepository.findUserByUserIdAndDelStatus(userId, 0);
 
 		} catch (Exception e) {
 
@@ -83,7 +83,7 @@ public class MasterApiControlller {
 
 		List<User> userList = new ArrayList<>();
 		try {
-			userList = userRepository.findUserByCompanyIdAndDelStatus(companyId, 1);
+			userList = userRepository.findUserByCompanyIdAndDelStatus(companyId, 0);
 
 		} catch (Exception e) {
 
@@ -163,7 +163,7 @@ public class MasterApiControlller {
 
 		ServiceAdviser serviceAdviser = null;
 		try {
-			serviceAdviser = serviceAdviserRepository.findServiceAdviserBySaIdAndDelStatus(saId, 1);
+			serviceAdviser = serviceAdviserRepository.findServiceAdviserBySaIdAndDelStatus(saId, 0);
 
 		} catch (Exception e) {
 
@@ -179,7 +179,7 @@ public class MasterApiControlller {
 
 		List<ServiceAdviser> saList = new ArrayList<>();
 		try {
-			saList = serviceAdviserRepository.findServiceAdviserByCompanyIdAndDelStatus(companyId, 1);
+			saList = serviceAdviserRepository.findServiceAdviserByCompanyIdAndDelStatus(companyId, 0);
 
 		} catch (Exception e) {
 
@@ -197,7 +197,7 @@ public class MasterApiControlller {
 
 		try {
 
-			serviceAdviser = serviceAdviserRepository.findAllByDelStatus(1);
+			serviceAdviser = serviceAdviserRepository.findAllByDelStatus(0);
 
 		} catch (Exception e) {
 
@@ -259,7 +259,7 @@ public class MasterApiControlller {
 
 		Customer customer = null;
 		try {
-			customer = customerRepository.findCustomerByCustIdAndDelStatus(custId, 1);
+			customer = customerRepository.findCustomerByCustIdAndDelStatus(custId, 0);
 
 		} catch (Exception e) {
 
@@ -275,7 +275,7 @@ public class MasterApiControlller {
 
 		List<Customer> custList = new ArrayList<>();
 		try {
-			custList = customerRepository.findCustomerByCompanyIdAndDelStatus(companyId, 1);
+			custList = customerRepository.findCustomerByCompanyIdAndDelStatus(companyId, 0);
 
 		} catch (Exception e) {
 
@@ -293,7 +293,7 @@ public class MasterApiControlller {
 
 		try {
 
-			customer = customerRepository.findAllByDelStatus(1);
+			customer = customerRepository.findAllByDelStatus(0);
 
 		} catch (Exception e) {
 
@@ -355,7 +355,7 @@ public class MasterApiControlller {
 
 		Company company = null;
 		try {
-			company = companyRepo.findCompanyByCompanyIdAndDelStatus(companyId, 1);
+			company = companyRepo.findCompanyByCompanyIdAndDelStatus(companyId, 0);
 
 		} catch (Exception e) {
 
@@ -487,7 +487,7 @@ public class MasterApiControlller {
 		LoginResponse loginResponse = new LoginResponse();
 		try {
 
-			User user = userRepository.findByUserMobileAndPasswordAndDelStatus(userMobile, password, 1);
+			User user = userRepository.findByUserMobileAndPasswordAndDelStatus(userMobile, password, 0);
 			if (user == null) {
 				loginResponse.setError(true);
 				loginResponse.setMsg("login Failed");
