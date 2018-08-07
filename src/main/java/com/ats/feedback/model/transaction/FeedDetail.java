@@ -26,7 +26,6 @@ public class FeedDetail {
 	private int saId;
 	private int status;
 	private int delStatus;
-	private String remark;
 
 	public int getFbDetailId() {
 		return fbDetailId;
@@ -100,19 +99,11 @@ public class FeedDetail {
 		this.delStatus = delStatus;
 	}
 
-	public String getRemark() {
-		return remark;
-	}
-
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
-
 	@Override
 	public String toString() {
 		return "FeedDetail [fbDetailId=" + fbDetailId + ", fbId=" + fbId + ", queNo=" + queNo + ", option=" + option
 				+ ", rating=" + rating + ", fbDate=" + fbDate + ", saId=" + saId + ", status=" + status + ", delStatus="
-				+ delStatus + ", remark=" + remark + "]";
+				+ delStatus + "]";
 	}
 
 }

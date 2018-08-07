@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ats.feedback.model.master.ErrorMessage;
 import com.ats.feedback.model.master.QueDetail;
-import com.ats.feedback.model.master.Question;
 import com.ats.feedback.model.transaction.FeedDetail;
 import com.ats.feedback.model.transaction.FeedHeader;
 import com.ats.feedback.repository.master.FeedDetailRepo;
@@ -70,6 +70,58 @@ public class FeedbackController {
 		}
 		return feedHeader;
 
+	}
+
+	@RequestMapping(value = { "/deleteFeedHeader" }, method = RequestMethod.POST)
+	public @ResponseBody ErrorMessage deleteFeedHeader(@RequestParam("fbId") int fbId) {
+
+		ErrorMessage errorMessage = new ErrorMessage();
+
+		try {
+			int delete = feedHeaderRepo.deleteFeedHeader(fbId);
+
+			if (delete == 1) {
+				errorMessage.setError(false);
+				errorMessage.setMessage("Deleted Successfully");
+			} else {
+				errorMessage.setError(true);
+				errorMessage.setMessage("Deletion Failed");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			errorMessage.setError(true);
+			errorMessage.setMessage("Deletion Failed :EXC");
+
+		}
+		return errorMessage;
+	}
+
+	@RequestMapping(value = { "/deleteFeedDetail" }, method = RequestMethod.POST)
+	public @ResponseBody ErrorMessage deleteFeedDetail(@RequestParam("fbDetailId") int fbDetailId) {
+
+		ErrorMessage errorMessage = new ErrorMessage();
+
+		try {
+			int delete = feedDetailRepo.deleteFeedDetail(fbDetailId);
+
+			if (delete == 1) {
+				errorMessage.setError(false);
+				errorMessage.setMessage("Deleted Successfully");
+			} else {
+				errorMessage.setError(true);
+				errorMessage.setMessage("Deletion Failed");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			errorMessage.setError(true);
+			errorMessage.setMessage("Deletion Failed :EXC");
+
+		}
+		return errorMessage;
 	}
 
 }
