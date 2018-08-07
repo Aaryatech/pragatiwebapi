@@ -1,5 +1,7 @@
 package com.ats.feedback.repository.master;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -16,5 +18,9 @@ public interface QuestionRepo extends JpaRepository<Question, Integer> {
 	@Modifying
 	@Query("UPDATE Question SET delStatus=0    WHERE que_no=:queNo ")
 	int deleteQue(@Param("queNo") int queNo);
+
+	Question findByCompanyId(int companyId);
+
+	List<Question> findByCompanyIdAndDelStatus(int companyId, int i);
 
 }
