@@ -2,7 +2,6 @@ package com.ats.feedback.controller;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,6 +60,26 @@ public class FeedbackController {
 
 			feedHeader = feedHeaderRepo.findByFbId(fbId);
 			List<FeedDetail> feedDetailList = feedDetailRepo.findByFbId(fbId);
+			feedHeader.setFeedDetailList(feedDetailList);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return feedHeader;
+
+	}
+
+	@RequestMapping(value = { "/getFeedbackByCompanyId" }, method = RequestMethod.POST)
+	public @ResponseBody FeedHeader getFeedbackByCompanyId(@RequestParam("companyId") int companyId) {
+
+		FeedHeader feedHeader = new FeedHeader();
+
+		try {
+
+			feedHeader = feedHeaderRepo.findByCompanyId(companyId);
+			List<FeedDetail> feedDetailList = feedDetailRepo.findByFbId(feedHeader.getFbId());
 			feedHeader.setFeedDetailList(feedDetailList);
 
 		} catch (Exception e) {

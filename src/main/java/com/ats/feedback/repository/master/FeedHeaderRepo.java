@@ -17,4 +17,6 @@ public interface FeedHeaderRepo extends JpaRepository<FeedHeader, Integer> {
 	@Query("UPDATE FeedHeader SET delStatus=1    WHERE fb_id=:fbId ")
 	int deleteFeedHeader(@Param("fbId") int fbId);
 
+	FeedHeader findByCompanyId(int companyId);
+
 }
