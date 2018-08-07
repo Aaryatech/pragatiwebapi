@@ -2,6 +2,7 @@ package com.ats.feedback.controller;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.feedback.model.master.ErrorMessage;
-import com.ats.feedback.model.master.QueDetail;
 import com.ats.feedback.model.transaction.FeedDetail;
 import com.ats.feedback.model.transaction.FeedHeader;
 import com.ats.feedback.repository.master.FeedDetailRepo;

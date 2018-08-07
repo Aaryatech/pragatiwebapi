@@ -270,6 +270,41 @@ public class MasterApiControlller {
 
 	}
 
+	@RequestMapping(value = { "/getCustomerByCustMobile" }, method = RequestMethod.POST)
+	public @ResponseBody Customer getCustomerByCustMobile(@RequestParam("custMobile") String custMobile) {
+
+		List<Customer> custList = new ArrayList<>();
+		Customer customer = null;
+
+		try {
+			custList = customerRepository.findCustomerByCustMobileAndDelStatus(custMobile, 0);
+			customer = custList.get(0);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return customer;
+
+	}
+
+	@RequestMapping(value = { "/getCustomerByVehicleRegNo" }, method = RequestMethod.POST)
+	public @ResponseBody Customer getCustomerByVehicleRegNo(@RequestParam("vehicleRegNo") String vehicleRegNo) {
+
+		Customer cust = null;
+		try {
+			cust = customerRepository.findByVehicleRegNoAndDelStatus(vehicleRegNo, 0);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return cust;
+
+	}
+
 	@RequestMapping(value = { "/getCustByCompanyId" }, method = RequestMethod.POST)
 	public @ResponseBody List<Customer> getCustByCompanyId(@RequestParam("companyId") int companyId) {
 
