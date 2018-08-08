@@ -20,6 +20,8 @@ public interface QuestionRepo extends JpaRepository<Question, Integer> {
 	int deleteQue(@Param("queNo") int queNo);
 
 	Question findByCompanyId(int companyId);
+	
+	List<Question> findAllByCompanyId(int companyId);
 
 	List<Question> findByCompanyIdAndDelStatus(int companyId, int i);
 

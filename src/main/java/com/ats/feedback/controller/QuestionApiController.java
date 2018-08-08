@@ -125,6 +125,31 @@ public class QuestionApiController {
 
 	}
 
+	@RequestMapping(value = { "/getQuestionHeaderAndDetailByCompanyId" }, method = RequestMethod.POST)
+	public @ResponseBody List<Question> getQuestionHeaderAndDetailByCompanyId(
+			@RequestParam("companyId") int companyId) {
+
+		List<Question> questionHeaderList = new ArrayList<>();
+
+		try {
+
+			questionHeaderList = questionRepo.findAllByCompanyId(companyId);
+			for(int i=0;i<questionHeaderList.size();i++)
+			{
+			List<QueDetail> queDetailList = queDetailRepo.findByQueNo(questionHeaderList.get(i).getCompanyId());
+				questionHeaderList.get(i).setQueDetailList(queDetailList);
+			
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return questionHeaderList;
+
+	}
+
 	@RequestMapping(value = { "/deleteQuestion" }, method = RequestMethod.POST)
 	public @ResponseBody ErrorMessage deleteQuestion(@RequestParam("queNo") int queNo) {
 
