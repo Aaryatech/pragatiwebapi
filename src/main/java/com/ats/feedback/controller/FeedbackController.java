@@ -14,8 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ats.feedback.model.master.ErrorMessage;
 import com.ats.feedback.model.transaction.FeedDetail;
 import com.ats.feedback.model.transaction.FeedHeader;
+import com.ats.feedback.model.transaction.GetFeedDetail;
+import com.ats.feedback.model.transaction.GetFeedHeader;
 import com.ats.feedback.repository.master.FeedDetailRepo;
 import com.ats.feedback.repository.master.FeedHeaderRepo;
+import com.ats.feedback.repository.master.GetFeedDetailRepo;
+import com.ats.feedback.repository.master.GetFeedHeaderRepo;
 
 @RestController
 public class FeedbackController {
@@ -25,6 +29,12 @@ public class FeedbackController {
 
 	@Autowired
 	FeedDetailRepo feedDetailRepo;
+
+	@Autowired
+	GetFeedHeaderRepo getFeedHeaderRepo;
+
+	@Autowired
+	GetFeedDetailRepo getFeedDetailRepo;
 
 	@RequestMapping(value = { "/saveFeedbackHeaderDetail" }, method = RequestMethod.POST)
 	public @ResponseBody FeedHeader saveFeedbackHeaderDetail(@RequestBody FeedHeader feedHeader) {
@@ -93,19 +103,20 @@ public class FeedbackController {
 	}
 
 	@RequestMapping(value = { "/getFeedbackByCompanyIdAndStatus" }, method = RequestMethod.POST)
-	public @ResponseBody List<FeedHeader> getFeedbackByCompanyIdAndStatus(@RequestParam("companyId") int companyId,
+	public @ResponseBody List<GetFeedHeader> getFeedbackByCompanyIdAndStatus(@RequestParam("companyId") int companyId,
 			@RequestParam("status") int status) {
 
-		List<FeedHeader> feedHeaderList = new ArrayList<>();
+		List<GetFeedHeader> feedHeaderList = new ArrayList<>();
 
 		try {
 
-			feedHeaderList = feedHeaderRepo.getFeedHeaderByCompanyId(companyId, status);
+			feedHeaderList = getFeedHeaderRepo.getAllFeedHeaderByCompanyId(companyId, status);
 			for (int i = 0; i < feedHeaderList.size(); i++) {
 
-				List<FeedDetail> feedDetailList = feedDetailRepo.findByFbId(feedHeaderList.get(i).getFbId());
+				List<GetFeedDetail> feedDetailList = getFeedDetailRepo
+						.getDetailByQueNo(feedHeaderList.get(i).getFbId());
 
-				feedHeaderList.get(i).setFeedDetailList(feedDetailList);
+				feedHeaderList.get(i).setGetFeedDetailList(feedDetailList);
 			}
 
 		} catch (Exception e) {
