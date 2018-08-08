@@ -1,5 +1,6 @@
 package com.ats.feedback.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,6 +89,93 @@ public class FeedbackController {
 
 		}
 		return feedHeader;
+
+	}
+
+	@RequestMapping(value = { "/getFeedbackByCompanyIdAndStatus" }, method = RequestMethod.POST)
+	public @ResponseBody List<FeedHeader> getFeedbackByCompanyIdAndStatus(@RequestParam("companyId") int companyId,
+			@RequestParam("status") int status) {
+
+		List<FeedHeader> feedHeaderList = new ArrayList<>();
+
+		try {
+
+			feedHeaderList = feedHeaderRepo.getFeedHeaderByCompanyId(companyId, status);
+			for (int i = 0; i < feedHeaderList.size(); i++) {
+
+				List<FeedDetail> feedDetailList = feedDetailRepo.findByFbId(feedHeaderList.get(i).getFbId());
+
+				feedHeaderList.get(i).setFeedDetailList(feedDetailList);
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return feedHeaderList;
+
+	}
+
+	@RequestMapping(value = { "/getFeedbackList" }, method = RequestMethod.POST)
+	public @ResponseBody List<FeedHeader> getFeedbackList(@RequestParam("companyId") int companyId,
+			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate,
+			@RequestParam("saId") int saId, @RequestParam("status") int status) {
+
+		List<FeedHeader> feedHeaderList = new ArrayList<>();
+
+		try {
+
+			if (companyId != 0 && saId != 0 && status != 0) {
+
+				feedHeaderList = feedHeaderRepo.getFeedbackList(companyId, fromDate, toDate, saId, status);
+				for (int i = 0; i < feedHeaderList.size(); i++) {
+
+					List<FeedDetail> feedDetailList = feedDetailRepo.findByFbId(feedHeaderList.get(i).getFbId());
+
+					feedHeaderList.get(i).setFeedDetailList(feedDetailList);
+				}
+			} else if (companyId != 0 && saId != 0 && status == 0) {
+
+				feedHeaderList = feedHeaderRepo.getFeedbackListAllStatus(companyId, fromDate, toDate, saId);
+				for (int i = 0; i < feedHeaderList.size(); i++) {
+
+					List<FeedDetail> feedDetailList = feedDetailRepo.findByFbId(feedHeaderList.get(i).getFbId());
+
+					feedHeaderList.get(i).setFeedDetailList(feedDetailList);
+				}
+
+			}
+
+			else if (companyId != 0 && saId == 0 && status == 0) {
+
+				feedHeaderList = feedHeaderRepo.getFeedbackListAllStatusAndSaId(companyId, fromDate, toDate);
+				for (int i = 0; i < feedHeaderList.size(); i++) {
+
+					List<FeedDetail> feedDetailList = feedDetailRepo.findByFbId(feedHeaderList.get(i).getFbId());
+
+					feedHeaderList.get(i).setFeedDetailList(feedDetailList);
+				}
+
+			}
+
+			else if (companyId != 0 && saId == 0 && status != 0) {
+
+				feedHeaderList = feedHeaderRepo.getFeedbackListAllSaId(companyId, fromDate, toDate, status);
+				for (int i = 0; i < feedHeaderList.size(); i++) {
+
+					List<FeedDetail> feedDetailList = feedDetailRepo.findByFbId(feedHeaderList.get(i).getFbId());
+
+					feedHeaderList.get(i).setFeedDetailList(feedDetailList);
+				}
+
+			}
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return feedHeaderList;
 
 	}
 
