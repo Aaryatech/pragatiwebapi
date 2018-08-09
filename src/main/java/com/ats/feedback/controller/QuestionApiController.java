@@ -68,7 +68,7 @@ public class QuestionApiController {
 
 		List<Question> queList = new ArrayList<>();
 		try {
-			queList = questionRepo.findByCompanyIdAndDelStatus(companyId, 1);
+			queList = questionRepo.findByCompanyIdAndDelStatus(companyId, 0);
 
 		} catch (Exception e) {
 
@@ -134,11 +134,10 @@ public class QuestionApiController {
 		try {
 
 			questionHeaderList = questionRepo.findAllByCompanyId(companyId);
-			for(int i=0;i<questionHeaderList.size();i++)
-			{
-			List<QueDetail> queDetailList = queDetailRepo.findByQueNo(questionHeaderList.get(i).getCompanyId());
+			for (int i = 0; i < questionHeaderList.size(); i++) {
+				List<QueDetail> queDetailList = queDetailRepo.findByQueNo(questionHeaderList.get(i).getQueNo());
 				questionHeaderList.get(i).setQueDetailList(queDetailList);
-			
+
 			}
 
 		} catch (Exception e) {
