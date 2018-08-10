@@ -32,6 +32,14 @@ public class GetFeedHeader {
 
 	private String saName;
 	private String userName;
+	private String managerName;
+
+	private String proFound;
+	private String actionTaken;
+	private String gmRemark;
+	private String signPhoto;
+	private int userId;
+	private float csi;
 
 	@Transient
 	List<GetFeedDetail> getFeedDetailList;
@@ -164,13 +172,70 @@ public class GetFeedHeader {
 		this.getFeedDetailList = getFeedDetailList;
 	}
 
+	public String getProFound() {
+		return proFound;
+	}
+
+	public void setProFound(String proFound) {
+		this.proFound = proFound;
+	}
+
+	public String getActionTaken() {
+		return actionTaken;
+	}
+
+	public void setActionTaken(String actionTaken) {
+		this.actionTaken = actionTaken;
+	}
+
+	public String getGmRemark() {
+		return gmRemark;
+	}
+
+	public void setGmRemark(String gmRemark) {
+		this.gmRemark = gmRemark;
+	}
+
+	public String getSignPhoto() {
+		return signPhoto;
+	}
+
+	public void setSignPhoto(String signPhoto) {
+		this.signPhoto = signPhoto;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+	public float getCsi() {
+		return csi;
+	}
+
+	public void setCsi(float csi) {
+		this.csi = csi;
+	}
+
+	public String getManagerName() {
+		return managerName;
+	}
+
+	public void setManagerName(String managerName) {
+		this.managerName = managerName;
+	}
+
 	@Override
 	public String toString() {
 		return "GetFeedHeader [fbId=" + fbId + ", fbDate=" + fbDate + ", jobcardNo=" + jobcardNo + ", saId=" + saId
 				+ ", custId=" + custId + ", custName=" + custName + ", contactNo=" + contactNo + ", vehRegNo="
 				+ vehRegNo + ", delStatus=" + delStatus + ", status=" + status + ", remark=" + remark + ", relManId="
 				+ relManId + ", companyId=" + companyId + ", saName=" + saName + ", userName=" + userName
-				+ ", getFeedDetailList=" + getFeedDetailList + "]";
+				+ ", proFound=" + proFound + ", actionTaken=" + actionTaken + ", gmRemark=" + gmRemark + ", signPhoto="
+				+ signPhoto + ", userId=" + userId + ", csi=" + csi + ", getFeedDetailList=" + getFeedDetailList + "]";
 	}
 
 }

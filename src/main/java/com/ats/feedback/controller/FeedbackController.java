@@ -140,6 +140,7 @@ public class FeedbackController {
 			if (saId != 0 && status != 0) {
 
 				feedHeaderList = getFeedHeaderRepo.getFeedbackList(companyId, fromDate, toDate, saId, status);
+
 				for (int i = 0; i < feedHeaderList.size(); i++) {
 
 					List<GetFeedDetail> feedDetailList = getFeedDetailRepo
