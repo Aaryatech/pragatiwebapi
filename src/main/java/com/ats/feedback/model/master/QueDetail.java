@@ -14,12 +14,17 @@ public class QueDetail {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "que_detail_id")
 	private int queDetailId;
-
+	@Column(name = "que_no")
 	private int queNo;
+	@Column(name = "option1")
 	private String option;
+	@Column(name = "marking")
 	private String marking;
+	@Column(name = "is_accpt_notaccept")
 	private int isAccptNotaccept;
+	@Column(name = "del_status")
 	private int delStatus;
+	@Column(name = "company_id")
 	private int companyId;
 
 	public int getQueDetailId() {
