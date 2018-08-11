@@ -20,9 +20,12 @@ public interface QuestionRepo extends JpaRepository<Question, Integer> {
 	int deleteQue(@Param("queNo") int queNo);
 
 	Question findByCompanyId(int companyId);
-	
+
 	List<Question> findAllByCompanyId(int companyId);
 
 	List<Question> findByCompanyIdAndDelStatus(int companyId, int i);
+
+	@Query(value = "SELECT * FROM m_question WHERE m_question.que_no IN(:queNo) AND m_question.del_status=0", nativeQuery = true)
+	List<Question> getQuestionScreenList(@Param("queNo") List<String> dataList);
 
 }
