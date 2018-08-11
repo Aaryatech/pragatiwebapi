@@ -89,14 +89,13 @@ public class QuestionApiController {
 			System.out.println(queHeaderRes);
 
 			queHeaderRes = questionRepo.saveAndFlush(questionHeader);
-			List<QueDetail> queDetailList=new ArrayList<>();
-			for (int i = 0; i < questionHeader.getQueDetailList().size(); i++)
-			{
+			List<QueDetail> queDetailList = new ArrayList<>();
+			for (int i = 0; i < questionHeader.getQueDetailList().size(); i++) {
 				questionHeader.getQueDetailList().get(i).setQueNo((queHeaderRes.getQueNo()));
 
 				QueDetail queDetailR = queDetailRepo.save(questionHeader.getQueDetailList().get(i));
 				queDetailList.add(queDetailR);
-			System.out.println("queDetailList" + queDetailList.toString());
+				System.out.println("queDetailList" + queDetailList.toString());
 
 			}
 			queHeaderRes.setQueDetailList(queDetailList);
@@ -137,7 +136,7 @@ public class QuestionApiController {
 
 		try {
 
-			questionHeaderList = questionRepo.findAllByCompanyId(companyId);
+			questionHeaderList = questionRepo.findByCompanyIdAndDelStatus(companyId, 0);
 			for (int i = 0; i < questionHeaderList.size(); i++) {
 				List<QueDetail> queDetailList = queDetailRepo.findByQueNo(questionHeaderList.get(i).getQueNo());
 				questionHeaderList.get(i).setQueDetailList(queDetailList);
