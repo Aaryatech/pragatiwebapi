@@ -1,6 +1,9 @@
 package com.ats.feedback.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +74,19 @@ public class FeedbackController {
 				userList = userRepository.findTokenByUserTypeIdAndDelStatus(2);
 				for (int j = 0; j < userList.size(); j++) {
 					Firebase.sendPushNotification(userList.get(j).getToken(), "Notification", "noti", 2);
-					// res = notiRepo.saveAndFlush(noti);
+
+					res.setDelStatus(1);
+					res.setUserId(userList.get(j).getUserId());
+
+					DateFormat df = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
+					Date dateobj = new Date();
+					System.out.println(df.format(dateobj));
+					res.setDate(df.format(dateobj));
+					res.setDesc("Noti");
+					res.setTitle("Notification");
+
+					Notification res1 = notiRepo.saveAndFlush(res);
+					System.out.println("res1" + res1);
 				}
 			} else if (feedHeader.getStatus() == 1) {
 				userList = userRepository.findTokenByUserTypeIdAndDelStatus(1);
