@@ -22,7 +22,7 @@ public class Firebase {
 	public final static String AUTH_KEY_FCM = "AAAAvgBdT8Y:APA91bEQg2VdTdB7GfMksze2J5sWVNsOHa6cGBjRJkMqBK05Zx1N0hW9tRhrE1dJ13CuUaKvtefSusRX1sOhDiiLpyrQuqpXobMx80U-FdqM4UWd_sCmhGLIdGAvpBS3v1IX5676xmUz";
 
 	public final static String API_URL_FCM = "https://fcm.googleapis.com/fcm/send";
-
+ 
 	public static String sendPushNotification(String deviceToken, String title, String body,int tag) throws IOException {
 
 		// System.out.println("Parameters : " + deviceToken + "\nTitle : " +

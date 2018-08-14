@@ -513,7 +513,7 @@ public class MasterApiControlller {
 		}
 		return screenList;
 
-	}
+	} 
 
 	@RequestMapping(value = { "/loginResponse" }, method = RequestMethod.POST)
 	public @ResponseBody LoginResponse loginResponse(@RequestParam("userMobile") String userMobile,
