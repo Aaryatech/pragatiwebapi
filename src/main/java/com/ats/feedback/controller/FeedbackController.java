@@ -72,7 +72,7 @@ System.out.println("feedHeader"+feedHeader.toString());
 			}
 			
 
-			/*	Notification res = new Notification();
+			Notification res = new Notification();
 				if (feedHeader.getStatus() == 0) {
 					userList = userRepository.findTokenByUserTypeIdAndDelStatus(2);
 					for (int j = 0; j < userList.size(); j++) {
@@ -86,7 +86,7 @@ System.out.println("feedHeader"+feedHeader.toString());
 						System.out.println(df.format(dateobj));
 						res.setDate(df.format(dateobj));
 						res.setDesc("Noti");
-						res.setTitle("Notification");/
+						res.setTitle("Notification");
 
 						Notification res1 = notiRepo.saveAndFlush(res);
 						System.out.println("res1" + res1);
@@ -97,7 +97,7 @@ System.out.println("feedHeader"+feedHeader.toString());
 					for (int j = 0; j < userList.size(); j++) {
 						Firebase.sendPushNotification(userList.get(j).getToken(), "Notification", "noti", 1);
 					}
-				}*/
+				}
 			
 		} catch (Exception e) {
 
