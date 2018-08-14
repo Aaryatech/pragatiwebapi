@@ -26,6 +26,7 @@
 	</properties>
 
 	<dependencies>
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -73,6 +74,7 @@
             <artifactId>gcm-server</artifactId>
             <version>1.0.2</version>
         </dependency>
+      
 	</dependencies>
 
 	<build>
