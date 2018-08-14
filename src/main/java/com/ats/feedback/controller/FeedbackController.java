@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ats.feedback.common.Firebase;
 import com.ats.feedback.model.master.ErrorMessage;
+import com.ats.feedback.model.master.Notification;
+import com.ats.feedback.model.master.User;
 import com.ats.feedback.model.transaction.FeedDetail;
 import com.ats.feedback.model.transaction.FeedHeader;
 import com.ats.feedback.model.transaction.GetFeedDetail;
@@ -20,6 +23,8 @@ import com.ats.feedback.repository.master.FeedDetailRepo;
 import com.ats.feedback.repository.master.FeedHeaderRepo;
 import com.ats.feedback.repository.master.GetFeedDetailRepo;
 import com.ats.feedback.repository.master.GetFeedHeaderRepo;
+import com.ats.feedback.repository.master.NotiRepo;
+import com.ats.feedback.repository.master.UserRepository;
 
 @RestController
 public class FeedbackController {
@@ -35,6 +40,12 @@ public class FeedbackController {
 
 	@Autowired
 	GetFeedDetailRepo getFeedDetailRepo;
+
+	@Autowired
+	UserRepository userRepository;
+
+	@Autowired
+	NotiRepo notiRepo;
 
 	@RequestMapping(value = { "/saveFeedbackHeaderDetail" }, method = RequestMethod.POST)
 	public @ResponseBody FeedHeader saveFeedbackHeaderDetail(@RequestBody FeedHeader feedHeader) {
@@ -53,6 +64,21 @@ public class FeedbackController {
 			List<FeedDetail> feedDetailList = feedDetailRepo.saveAll(feedHeaderRes.getFeedDetailList());
 			System.out.println("feedDetailList" + feedDetailList.toString());
 			feedHeaderRes.setFeedDetailList(feedDetailList);
+
+			Notification res = new Notification();
+			if (feedHeader.getStatus() == 0) {
+				List<String> tokenList = userRepository.findTokenByUserTypeIdAndDelStatus(2);
+				for (int j = 0; j < tokenList.size(); j++) {
+					Firebase.sendPushNotification(tokenList.get(j), "Notification", "noti", 2);
+					// res = notiRepo.saveAndFlush(noti);
+				}
+			} else if (feedHeader.getStatus() == 1) {
+				List<String> tokenList = userRepository.findTokenByUserTypeIdAndDelStatus(1);
+
+				for (int j = 0; j < tokenList.size(); j++) {
+					Firebase.sendPushNotification(tokenList.get(j), "Notification", "noti", 1);
+				}
+			}
 		} catch (Exception e) {
 
 			e.printStackTrace();
