@@ -28,6 +28,7 @@ public class ScreenApiController {
 
 	@Autowired
 	QueDetailRepo queDetailRepo;
+	
 
 	@RequestMapping(value = { "/getScreenListByCompanyId" }, method = RequestMethod.POST)
 	public @ResponseBody List<ScreenList> getScreenListByCompanyId(@RequestParam("companyId") int companyId) {
