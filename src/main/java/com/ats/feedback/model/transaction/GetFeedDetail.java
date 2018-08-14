@@ -17,7 +17,7 @@ public class GetFeedDetail {
 	private int fbId;
 	private int queNo;
 
-	private String option;
+	private String optionName;
 	private String rating;
 	private String fbDate;
 
@@ -51,14 +51,7 @@ public class GetFeedDetail {
 		this.queNo = queNo;
 	}
 
-	public String getOption() {
-		return option;
-	}
-
-	public void setOption(String option) {
-		this.option = option;
-	}
-
+	
 	public String getRating() {
 		return rating;
 	}
@@ -107,11 +100,21 @@ public class GetFeedDetail {
 		this.queText = queText;
 	}
 
+	public String getOptionName() {
+		return optionName;
+	}
+
+	public void setOptionName(String optionName) {
+		this.optionName = optionName;
+	}
+
 	@Override
 	public String toString() {
-		return "GetFeedDetail [fbDetailId=" + fbDetailId + ", fbId=" + fbId + ", queNo=" + queNo + ", option=" + option
-				+ ", rating=" + rating + ", fbDate=" + fbDate + ", saId=" + saId + ", status=" + status + ", delStatus="
-				+ delStatus + ", queText=" + queText + "]";
+		return "GetFeedDetail [fbDetailId=" + fbDetailId + ", fbId=" + fbId + ", queNo=" + queNo + ", optionName="
+				+ optionName + ", rating=" + rating + ", fbDate=" + fbDate + ", saId=" + saId + ", status=" + status
+				+ ", delStatus=" + delStatus + ", queText=" + queText + "]";
 	}
+
+	
 
 }

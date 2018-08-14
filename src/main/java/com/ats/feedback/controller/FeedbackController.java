@@ -58,43 +58,47 @@ public class FeedbackController {
 
 		try {
 
-			System.out.println(feedHeaderRes);
 
 			feedHeaderRes = feedHeaderRepo.saveAndFlush(feedHeader);
+System.out.println("feedHeader"+feedHeader.toString());
 
-			for (int i = 0; i < feedHeader.getFeedDetailList().size(); i++)
+			for (int i = 0; i < feedHeader.getFeedDetailList().size(); i++) {
 				feedHeader.getFeedDetailList().get(i).setFbId(feedHeaderRes.getFbId());
 
-			List<FeedDetail> feedDetailList = feedDetailRepo.saveAll(feedHeaderRes.getFeedDetailList());
-			System.out.println("feedDetailList" + feedDetailList.toString());
-			feedHeaderRes.setFeedDetailList(feedDetailList);
-
-			Notification res = new Notification();
-			if (feedHeader.getStatus() == 0) {
-				userList = userRepository.findTokenByUserTypeIdAndDelStatus(2);
-				for (int j = 0; j < userList.size(); j++) {
-					Firebase.sendPushNotification(userList.get(j).getToken(), "Notification", "noti", 2);
-
-					res.setDelStatus(1);
-					res.setUserId(userList.get(j).getUserId());
-
-					DateFormat df = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
-					Date dateobj = new Date();
-					System.out.println(df.format(dateobj));
-					res.setDate(df.format(dateobj));
-					res.setDesc("Noti");
-					res.setTitle("Notification");
-
-					Notification res1 = notiRepo.saveAndFlush(res);
-					System.out.println("res1" + res1);
-				}
-			} else if (feedHeader.getStatus() == 1) {
-				userList = userRepository.findTokenByUserTypeIdAndDelStatus(1);
-
-				for (int j = 0; j < userList.size(); j++) {
-					Firebase.sendPushNotification(userList.get(j).getToken(), "Notification", "noti", 1);
-				}
+				List<FeedDetail> feedDetailList = feedDetailRepo.saveAll(feedHeader.getFeedDetailList());
+				System.out.println("feedDetailList" + feedDetailList.toString());
+			
+				feedHeaderRes.setFeedDetailList(feedDetailList);
 			}
+			
+
+			/*	Notification res = new Notification();
+				if (feedHeader.getStatus() == 0) {
+					userList = userRepository.findTokenByUserTypeIdAndDelStatus(2);
+					for (int j = 0; j < userList.size(); j++) {
+						Firebase.sendPushNotification(userList.get(j).getToken(), "Notification", "noti", 2);
+
+						res.setDelStatus(1);
+						res.setUserId(userList.get(j).getUserId());
+
+						DateFormat df = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
+						Date dateobj = new Date();
+						System.out.println(df.format(dateobj));
+						res.setDate(df.format(dateobj));
+						res.setDesc("Noti");
+						res.setTitle("Notification");/
+
+						Notification res1 = notiRepo.saveAndFlush(res);
+						System.out.println("res1" + res1);
+					}
+				} else if (feedHeader.getStatus() == 1) {
+					userList = userRepository.findTokenByUserTypeIdAndDelStatus(1);
+
+					for (int j = 0; j < userList.size(); j++) {
+						Firebase.sendPushNotification(userList.get(j).getToken(), "Notification", "noti", 1);
+					}
+				}*/
+			
 		} catch (Exception e) {
 
 			e.printStackTrace();
