@@ -51,6 +51,7 @@ public class FeedbackController {
 	public @ResponseBody FeedHeader saveFeedbackHeaderDetail(@RequestBody FeedHeader feedHeader) {
 
 		FeedHeader feedHeaderRes = new FeedHeader();
+		List<User> userList = new ArrayList<>();
 
 		try {
 
@@ -67,16 +68,16 @@ public class FeedbackController {
 
 			Notification res = new Notification();
 			if (feedHeader.getStatus() == 0) {
-				List<String> tokenList = userRepository.findTokenByUserTypeIdAndDelStatus(2);
-				for (int j = 0; j < tokenList.size(); j++) {
-					Firebase.sendPushNotification(tokenList.get(j), "Notification", "noti", 2);
+				userList = userRepository.findTokenByUserTypeIdAndDelStatus(2);
+				for (int j = 0; j < userList.size(); j++) {
+					Firebase.sendPushNotification(userList.get(j).getToken(), "Notification", "noti", 2);
 					// res = notiRepo.saveAndFlush(noti);
 				}
 			} else if (feedHeader.getStatus() == 1) {
-				List<String> tokenList = userRepository.findTokenByUserTypeIdAndDelStatus(1);
+				userList = userRepository.findTokenByUserTypeIdAndDelStatus(1);
 
-				for (int j = 0; j < tokenList.size(); j++) {
-					Firebase.sendPushNotification(tokenList.get(j), "Notification", "noti", 1);
+				for (int j = 0; j < userList.size(); j++) {
+					Firebase.sendPushNotification(userList.get(j).getToken(), "Notification", "noti", 1);
 				}
 			}
 		} catch (Exception e) {

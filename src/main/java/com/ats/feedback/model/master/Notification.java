@@ -21,6 +21,8 @@ public class Notification {
 	private int userId;
 	private int delStatus;
 
+	private String date;
+
 	public int getNotiId() {
 		return notiId;
 	}
@@ -61,10 +63,18 @@ public class Notification {
 		this.delStatus = delStatus;
 	}
 
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
 	@Override
 	public String toString() {
 		return "Notification [notiId=" + notiId + ", title=" + title + ", desc=" + desc + ", userId=" + userId
-				+ ", delStatus=" + delStatus + "]";
+				+ ", delStatus=" + delStatus + ", date=" + date + "]";
 	}
 
 }

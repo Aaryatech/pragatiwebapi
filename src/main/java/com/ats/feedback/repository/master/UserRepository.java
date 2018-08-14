@@ -27,5 +27,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	User findByUserMobileAndPasswordAndDelStatus(String userMobile, String password, int i);
 
 	@Query(value = "SELECT m_user.token FROM m_user WHERE m_user.user_type=:userType AND m_user.del_status=0", nativeQuery = true)
-	List<String> findTokenByUserTypeIdAndDelStatus(@Param("userType") int userType);
+	List<User> findTokenByUserTypeIdAndDelStatus(@Param("userType") int userType);
 }
