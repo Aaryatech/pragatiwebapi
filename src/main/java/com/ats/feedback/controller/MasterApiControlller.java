@@ -101,7 +101,7 @@ public class MasterApiControlller {
 
 		try {
 
-			user = userRepository.findAllByDelStatus(1);
+			user = userRepository.findAllByDelStatus(0);
 
 		} catch (Exception e) {
 
