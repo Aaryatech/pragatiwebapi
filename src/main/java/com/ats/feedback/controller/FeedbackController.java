@@ -70,6 +70,8 @@ public class FeedbackController {
 				feedHeaderRes.setFeedDetailList(feedDetailList);
 			}
 
+			System.out.println("Status for notification test" + feedHeader.getStatus());
+
 			Notification res = new Notification();
 			if (feedHeader.getStatus() == 0) {
 				userList = userRepository.findTokenByUserTypeIdAndDelStatus(2);
@@ -79,15 +81,15 @@ public class FeedbackController {
 					res.setDelStatus(1);
 					res.setUserId(userList.get(j).getUserId());
 
-					DateFormat df = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
+					DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 					Date dateobj = new Date();
 					System.out.println(df.format(dateobj));
 					res.setDate(df.format(dateobj));
 					res.setDesc("Noti");
 					res.setTitle("Notification");
 
-					Notification res1 = notiRepo.saveAndFlush(res);
-					System.out.println("res1" + res1);
+					res = notiRepo.save(res);
+					System.out.println("res1" + res);
 				}
 			} else if (feedHeader.getStatus() == 1) {
 				userList = userRepository.findTokenByUserTypeIdAndDelStatus(1);
@@ -97,15 +99,15 @@ public class FeedbackController {
 					res.setDelStatus(1);
 					res.setUserId(userList.get(j).getUserId());
 
-					DateFormat df = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
+					DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 					Date dateobj = new Date();
 					System.out.println(df.format(dateobj));
 					res.setDate(df.format(dateobj));
 					res.setDesc("Noti");
 					res.setTitle("Notification");
 
-					Notification res1 = notiRepo.saveAndFlush(res);
-					System.out.println("res1" + res1);
+					res = notiRepo.saveAndFlush(res);
+					System.out.println("res1" + res);
 				}
 			}
 
@@ -275,6 +277,61 @@ public class FeedbackController {
 			e.printStackTrace();
 			errorMessage.setError(true);
 			errorMessage.setMessage("Deletion Failed :EXC");
+
+		}
+		return errorMessage;
+	}
+
+	@RequestMapping(value = { "/updateFeedHeader" }, method = RequestMethod.POST)
+	public @ResponseBody ErrorMessage updateFeedHeader(@RequestParam("fbId") int fbId,
+			@RequestParam("gmRemark") String gmRemark, @RequestParam("status") int status) {
+
+		ErrorMessage errorMessage = new ErrorMessage();
+
+		try {
+			int delete = feedHeaderRepo.updateFeedHeader(fbId, gmRemark, status);
+
+			if (delete == 1) {
+				errorMessage.setError(false);
+				errorMessage.setMessage("update Successfully");
+			} else {
+				errorMessage.setError(true);
+				errorMessage.setMessage("no update");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			errorMessage.setError(true);
+			errorMessage.setMessage("Update Failed :EXC");
+
+		}
+		return errorMessage;
+	}
+
+	@RequestMapping(value = { "/updateFeedHeader1" }, method = RequestMethod.POST)
+	public @ResponseBody ErrorMessage updateFeedHeader1(@RequestParam("fbId") int fbId,
+			@RequestParam("relManId") int relManId, @RequestParam("proFound") String proFound,
+			@RequestParam("actionTaken") String actionTaken, @RequestParam("status") int status) {
+
+		ErrorMessage errorMessage = new ErrorMessage();
+
+		try {
+			int delete = feedHeaderRepo.updateFeedHeader1(fbId, relManId, proFound, actionTaken, status);
+
+			if (delete == 1) {
+				errorMessage.setError(false);
+				errorMessage.setMessage("update Successfully");
+			} else {
+				errorMessage.setError(true);
+				errorMessage.setMessage("no update");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			errorMessage.setError(true);
+			errorMessage.setMessage("Update Failed :EXC");
 
 		}
 		return errorMessage;

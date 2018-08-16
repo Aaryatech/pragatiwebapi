@@ -24,4 +24,15 @@ public interface FeedHeaderRepo extends JpaRepository<FeedHeader, Integer> {
 	@Query(value = "SELECT d.* FROM t_fb_header d WHERE d.company_id=:companyId AND d.del_status=0 AND d.status=:status", nativeQuery = true)
 	List<FeedHeader> getFeedHeaderByCompanyId(@Param("companyId") int companyId, @Param("status") int status);
 
+	@Transactional
+	@Modifying
+	@Query("UPDATE FeedHeader SET gm_remark=:gmRemark,status=:status    WHERE fb_id=:fbId ")
+	int updateFeedHeader(@Param("fbId") int fbId, @Param("gmRemark") String gmRemark, @Param("status") int status);
+
+	@Transactional
+	@Modifying
+	@Query("UPDATE FeedHeader SET rel_man_id=:relManId, pro_found=:proFound,action_taken=:actionTaken,status=:status   WHERE fb_id=:fbId ")
+	int updateFeedHeader1(@Param("fbId") int fbId, @Param("relManId") int relManId, @Param("proFound") String proFound,
+			@Param("actionTaken") String actionTaken, @Param("status") int status);
+
 }

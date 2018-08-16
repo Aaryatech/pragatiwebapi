@@ -17,6 +17,7 @@ public class Notification {
 	private int notiId;
 
 	private String title;
+	@Column(name = "desc1")
 	private String desc;
 	private int userId;
 	private int delStatus;
