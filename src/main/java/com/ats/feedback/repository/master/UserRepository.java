@@ -22,7 +22,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
 	User findUserByUserIdAndDelStatus(int userId, int i);
 
-	List<User> findUserByCompanyIdAndDelStatus(int companyId, int i);
+	@Query(value = "SELECT m_user.* FROM m_user WHERE m_user.company_id=:companyId AND m_user.del_status=0 AND m_user.user_id!=1 AND  m_user.user_id!=2 AND  m_user.user_id!=3", nativeQuery = true)
+	List<User> findUserByCompanyIdAndDelStatus(@Param("companyId") int companyId);
 
 	User findByUserMobileAndPasswordAndDelStatus(String userMobile, String password, int i);
 

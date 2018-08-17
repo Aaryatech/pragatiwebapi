@@ -83,7 +83,7 @@ public class MasterApiControlller {
 
 		List<User> userList = new ArrayList<>();
 		try {
-			userList = userRepository.findUserByCompanyIdAndDelStatus(companyId, 0);
+			userList = userRepository.findUserByCompanyIdAndDelStatus(companyId);
 
 		} catch (Exception e) {
 
@@ -513,7 +513,7 @@ public class MasterApiControlller {
 		}
 		return screenList;
 
-	} 
+	}
 
 	@RequestMapping(value = { "/loginResponse" }, method = RequestMethod.POST)
 	public @ResponseBody LoginResponse loginResponse(@RequestParam("userMobile") String userMobile,
