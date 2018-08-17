@@ -195,7 +195,7 @@ public class FeedbackController {
 
 		try {
 
-			if (saId != 0 && status != 0) {
+			if (saId != 0 && status != -1) {
 
 				feedHeaderList = getFeedHeaderRepo.getFeedbackList(companyId, fromDate, toDate, saId, status);
 
@@ -206,7 +206,7 @@ public class FeedbackController {
 
 					feedHeaderList.get(i).setGetFeedDetailList(feedDetailList);
 				}
-			} else if (saId != 0 && status == 0) {
+			} else if (saId != 0 && status == -1) {
 
 				feedHeaderList = getFeedHeaderRepo.getFeedbackListAllStatus(companyId, fromDate, toDate, saId);
 				for (int i = 0; i < feedHeaderList.size(); i++) {
@@ -219,7 +219,7 @@ public class FeedbackController {
 
 			}
 
-			else if (saId == 0 && status == 0) {
+			else if (saId == 0 && status == -1) {
 
 				feedHeaderList = getFeedHeaderRepo.getFeedbackListAllStatusAndSaId(companyId, fromDate, toDate);
 				for (int i = 0; i < feedHeaderList.size(); i++) {
@@ -232,7 +232,7 @@ public class FeedbackController {
 
 			}
 
-			else if (saId == 0 && status != 0) {
+			else if (saId == 0 && status != -1) {
 
 				feedHeaderList = getFeedHeaderRepo.getFeedbackListAllSaId(companyId, fromDate, toDate, status);
 				for (int i = 0; i < feedHeaderList.size(); i++) {
