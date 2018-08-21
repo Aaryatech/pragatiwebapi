@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.feedback.model.master.Company;
+import com.ats.feedback.model.master.Count;
 import com.ats.feedback.model.master.Customer;
 import com.ats.feedback.model.master.ErrorMessage;
 import com.ats.feedback.model.master.LoginResponse;
@@ -20,6 +21,7 @@ import com.ats.feedback.model.master.Screen;
 import com.ats.feedback.model.master.ServiceAdviser;
 import com.ats.feedback.model.master.User;
 import com.ats.feedback.repository.master.CompanyRepo;
+import com.ats.feedback.repository.master.CountRepository;
 import com.ats.feedback.repository.master.CustomerRepository;
 import com.ats.feedback.repository.master.ScreenRepository;
 import com.ats.feedback.repository.master.ServiceAdviserRepository;
@@ -41,6 +43,9 @@ public class MasterApiControlller {
 	CompanyRepo companyRepo;
 	@Autowired
 	ScreenRepository screenRepository;
+
+	@Autowired
+	CountRepository countRepository;
 
 	// -------------------User------------------------
 
@@ -540,6 +545,22 @@ public class MasterApiControlller {
 		}
 
 		return loginResponse;
+	}
+
+	@RequestMapping(value = { "/getStatusCountByCompanyId" }, method = RequestMethod.POST)
+	public @ResponseBody Count getStatusCountByCompanyId(@RequestParam("companyId") int companyId) {
+
+		Count count = null;
+		try {
+			count = countRepository.getStatusCount(companyId);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return count;
+
 	}
 
 }
