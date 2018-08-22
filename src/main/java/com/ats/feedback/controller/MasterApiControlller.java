@@ -297,16 +297,18 @@ public class MasterApiControlller {
 	@RequestMapping(value = { "/getCustomerByVehicleRegNo" }, method = RequestMethod.POST)
 	public @ResponseBody Customer getCustomerByVehicleRegNo(@RequestParam("vehicleRegNo") String vehicleRegNo) {
 
-		Customer cust = null;
+		List<Customer> custList = new ArrayList<>();
+		Customer customer = null;
 		try {
-			cust = customerRepository.findByVehicleRegNoAndDelStatus(vehicleRegNo, 0);
+			custList = customerRepository.findByVehicleRegNoAndDelStatus(vehicleRegNo, 0);
+			customer = custList.get(0);
 
 		} catch (Exception e) {
 
 			e.printStackTrace();
 
 		}
-		return cust;
+		return customer;
 
 	}
 

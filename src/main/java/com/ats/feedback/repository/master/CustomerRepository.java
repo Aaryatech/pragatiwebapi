@@ -26,6 +26,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
 	List<Customer> findCustomerByCustMobileAndDelStatus(String custMobile, int i);
 
-	Customer findByVehicleRegNoAndDelStatus(String vehicleRegNo, int i);
+	List<Customer> findByVehicleRegNoAndDelStatus(String vehicleRegNo, int i);
 
 }
