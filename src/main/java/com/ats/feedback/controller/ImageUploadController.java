@@ -20,7 +20,7 @@ import com.ats.feedback.model.master.ErrorMessage;
 @RestController
 public class ImageUploadController {
 
-	private static String SIGN_URL = "/opt/apache-tomcat-8.5.6/webapps/happyfeast/uploads/item/";
+	private static String SIGN_URL = "/home/aaryate1/pragati.aaryatechindia.in/tomcat-8.0.18/webapps/signature/";
 
 	@RequestMapping(value = { "/photoUpload" }, method = RequestMethod.POST)
 	public @ResponseBody ErrorMessage getFarmerContract(@RequestParam("file") MultipartFile uploadfile,

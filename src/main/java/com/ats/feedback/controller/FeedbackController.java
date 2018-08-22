@@ -75,8 +75,11 @@ public class FeedbackController {
 			Notification res = new Notification();
 			if (feedHeader.getStatus() == 0) {
 				userList = userRepository.findTokenByUserTypeIdAndDelStatus(2);
+
+				System.out.println("STATUS : 0----------------" + userList);
+
 				for (int j = 0; j < userList.size(); j++) {
-					Firebase.sendPushNotification(userList.get(j).getToken(), "Notification", "noti", 2);
+					Firebase.sendPushNotification(userList.get(j).getToken(), "CRM Notification", "Following customer is unsatisfied\nCustomer Name : "+feedHeader.getCustName()+"\nVehicle No. : "+feedHeader.getVehRegNo(), 2);
 
 					res.setDelStatus(1);
 					res.setUserId(userList.get(j).getUserId());
@@ -94,8 +97,10 @@ public class FeedbackController {
 			} else if (feedHeader.getStatus() == 1) {
 				userList = userRepository.findTokenByUserTypeIdAndDelStatus(1);
 
+				System.out.println("STATUS : 1----------------" + userList);
+
 				for (int j = 0; j < userList.size(); j++) {
-					Firebase.sendPushNotification(userList.get(j).getToken(), "Notification", "noti", 1);
+					Firebase.sendPushNotification(userList.get(j).getToken(), "GM Notification", "Following customer is unsatisfied from CRM\nCustomer Name : "+feedHeader.getCustName()+"\nVehicle No. : "+feedHeader.getVehRegNo(), 1);
 					res.setDelStatus(1);
 					res.setUserId(userList.get(j).getUserId());
 
