@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ats.feedback.model.master.Count;
 import com.ats.feedback.model.master.Customer;
 import com.ats.feedback.model.master.Screen;
 
@@ -27,5 +28,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 	List<Customer> findCustomerByCustMobileAndDelStatus(String custMobile, int i);
 
 	List<Customer> findByVehicleRegNoAndDelStatus(String vehicleRegNo, int i);
+
+	@Query(value = "SELECT c.* FROM m_customer c ,t_fb_header f WHERE c.cust_id=f.cust_id AND f.fb_id=:fbId AND f.del_status=0", nativeQuery = true)
+	Customer getCustomerInfo(@Param("fbId") int fbId);
 
 }

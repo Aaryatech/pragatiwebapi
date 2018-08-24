@@ -1,6 +1,7 @@
 package com.ats.feedback.controller;
 
 import java.text.DateFormat;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.feedback.common.Firebase;
+import com.ats.feedback.model.master.Customer;
 import com.ats.feedback.model.master.ErrorMessage;
 import com.ats.feedback.model.master.Notification;
 import com.ats.feedback.model.master.User;
@@ -22,6 +24,7 @@ import com.ats.feedback.model.transaction.FeedDetail;
 import com.ats.feedback.model.transaction.FeedHeader;
 import com.ats.feedback.model.transaction.GetFeedDetail;
 import com.ats.feedback.model.transaction.GetFeedHeader;
+import com.ats.feedback.repository.master.CustomerRepository;
 import com.ats.feedback.repository.master.FeedDetailRepo;
 import com.ats.feedback.repository.master.FeedHeaderRepo;
 import com.ats.feedback.repository.master.GetFeedDetailRepo;
@@ -49,6 +52,9 @@ public class FeedbackController {
 
 	@Autowired
 	NotiRepo notiRepo;
+
+	@Autowired
+	CustomerRepository customerRepository;
 
 	@RequestMapping(value = { "/saveFeedbackHeaderDetail" }, method = RequestMethod.POST)
 	public @ResponseBody FeedHeader saveFeedbackHeaderDetail(@RequestBody FeedHeader feedHeader) {
@@ -79,7 +85,10 @@ public class FeedbackController {
 				System.out.println("STATUS : 0----------------" + userList);
 
 				for (int j = 0; j < userList.size(); j++) {
-					Firebase.sendPushNotification(userList.get(j).getToken(), "CRM Notification", "Following customer is unsatisfied\nCustomer Name : "+feedHeader.getCustName()+"\nVehicle No. : "+feedHeader.getVehRegNo(), 2);
+					Firebase.sendPushNotification(userList.get(j).getToken(), "CRM Notification",
+							"Following customer is unsatisfied\nCustomer Name : " + feedHeader.getCustName()
+									+ "\nVehicle No. : " + feedHeader.getVehRegNo(),
+							2);
 
 					res.setDelStatus(1);
 					res.setUserId(userList.get(j).getUserId());
@@ -100,7 +109,10 @@ public class FeedbackController {
 				System.out.println("STATUS : 1----------------" + userList);
 
 				for (int j = 0; j < userList.size(); j++) {
-					Firebase.sendPushNotification(userList.get(j).getToken(), "GM Notification", "Following customer is unsatisfied from CRM\nCustomer Name : "+feedHeader.getCustName()+"\nVehicle No. : "+feedHeader.getVehRegNo(), 1);
+					Firebase.sendPushNotification(userList.get(j).getToken(), "GM Notification",
+							"Following customer is unsatisfied from CRM\nCustomer Name : " + feedHeader.getCustName()
+									+ "\nVehicle No. : " + feedHeader.getVehRegNo(),
+							1);
 					res.setDelStatus(1);
 					res.setUserId(userList.get(j).getUserId());
 
@@ -320,6 +332,9 @@ public class FeedbackController {
 			@RequestParam("actionTaken") String actionTaken, @RequestParam("status") int status) {
 
 		ErrorMessage errorMessage = new ErrorMessage();
+		List<User> userList = new ArrayList<>();
+
+		Customer cust = new Customer();
 
 		try {
 			int delete = feedHeaderRepo.updateFeedHeader1(fbId, relManId, proFound, actionTaken, status);
@@ -327,6 +342,33 @@ public class FeedbackController {
 			if (delete == 1) {
 				errorMessage.setError(false);
 				errorMessage.setMessage("update Successfully");
+				Notification res = new Notification();
+
+				if (status == 1) {
+					userList = userRepository.findTokenByUserTypeIdAndDelStatus(1);
+					cust = customerRepository.getCustomerInfo(fbId);
+
+					System.out.println("STATUS : 1----------------" + userList);
+
+					for (int j = 0; j < userList.size(); j++) {
+						Firebase.sendPushNotification(userList.get(j).getToken(), "GM Notification",
+								"Following customer is unsatisfied from CRM\nCustomer Name : " + cust.getCustName()
+										+ "\nVehicle No. : " + cust.getVehicleRegNo(),
+								1);
+						res.setDelStatus(1);
+						res.setUserId(userList.get(j).getUserId());
+
+						DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+						Date dateobj = new Date();
+						System.out.println(df.format(dateobj));
+						res.setDate(df.format(dateobj));
+						res.setDesc("Noti");
+						res.setTitle("Notification");
+
+						res = notiRepo.saveAndFlush(res);
+						System.out.println("res1" + res);
+					}
+				}
 			} else {
 				errorMessage.setError(true);
 				errorMessage.setMessage("no update");
